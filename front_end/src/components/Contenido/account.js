@@ -31,8 +31,9 @@ export default function ProfilePage() {
     
     const res = await resultado.json()
   const array = res.user
-  console.log(array)
-  return array   
+  
+return array
+
     
   } catch (err) {console.log(`⛔⛔⛔: ${err.response.data.message}`);
   
@@ -41,6 +42,7 @@ export default function ProfilePage() {
 const dato =fav().then(
   data=>{
    getMoneda(URI,data)
+   console.log(data)
   }
 )
 
@@ -51,21 +53,8 @@ const dato =fav().then(
     fetch(URI)
     .then((response)=>response.json())
     .then( (data)=>{ 
-      
-      const filter = (data,query)=>{
-        data.filter(data => {const values = data.name
-         
-        return query.query(q => values.includes(q.moneda)
-        )})
-
-      }
-      const restulado= filter(data,array2);
-      setMoneda(restulado)
-
-
-
-
-   
+     let arrayFilter = array2.map(itemarry => {return itemarry.moneda})
+     setMoneda(data.filter(itemx =>arrayFilter.includes(itemx.id)))
   
 
       
@@ -92,7 +81,14 @@ const dato =fav().then(
     
   }
 
- 
+ /*   const filter = (data,query)=>{
+        data.filter(data => {const values = data.name
+         
+        return query.every(q => values.includes(q.moneda)
+        )})
+
+      }
+      const restulado= filter(data,array2);*/ 
 
   if ( !user && !redirect) {
     return <Navigate to={'/login'} />
